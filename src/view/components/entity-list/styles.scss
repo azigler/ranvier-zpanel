@@ -1,0 +1,35 @@
+div.entity-list-page {
+  .top {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 0 10px;
+    border-bottom: 0;
+    margin-bottom: 1rem;
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    &.area .top {
+      padding-top: 22px;
+    }
+  }
+
+  .cui-list {
+    max-width: 40rem;
+    margin: 0 auto;
+    border-radius: 6px;
+    border-top: 1px dotted #37474f;
+    border-left: 1px dotted #37474f;
+    box-shadow: 3px 4px 5px 0px #d5d9dc;
+    max-height: initial;
+
+    &.cui-interactive {
+      .cui-list-item:hover {
+        font-weight: bold;
+        cursor: pointer;
+        background: #e9ffee47;
+      }
+    }
+  }
+}

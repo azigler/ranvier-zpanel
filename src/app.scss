@@ -1,0 +1,43 @@
+@import-normalize;
+@import './../node_modules/construct-ui/lib/index.css';
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+html, body, #root {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Courier Prime', monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #37474f;
+  overflow-x: hidden;
+  background-color: #f9fcff;
+}
+
+pre {
+  display: inline;
+  padding: 0 4px;
+}
+
+.login-page {
+  max-width: 21rem!important;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  margin-top: -6rem!important;
+
+  .title-holder {
+    h1 {
+      display: inline-block;
+    }
+    img {
+      margin-bottom: 1rem;
+      margin-left: 0.5rem;
+      width: 2rem;
+      display: inline-block;
+    }
+  }
+}

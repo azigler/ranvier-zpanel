@@ -1,0 +1,15 @@
+.back-link {
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  &:active {
+    padding-top: 1px;
+    font-weight: 400;
+    margin-bottom: -1px;
+  }
+}

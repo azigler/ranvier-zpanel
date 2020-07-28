@@ -1,0 +1,666 @@
+{
+	"info": {
+		"_postman_id": "8353767c-dab7-48b0-949f-1b211b7824d4",
+		"name": "zPanel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AREA",
+			"item": [
+				{
+					"name": "GET all Areas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/area/",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"area",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Area by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/area/debug",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"area",
+								"debug"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Area by id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"hi momma\",\n    \"bundle\": \"bundle-for-area\"\n}"
+						},
+						"url": {
+							"raw": "localhost:4335/api/area/apitest88",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"area",
+								"apitest88"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Area by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/area/apitest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"area",
+								"apitest"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ROOM",
+			"item": [
+				{
+					"name": "GET all Rooms in an Area",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/room/apitest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"room",
+								"apitest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Room in an Area by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/room/apitest/roomtest90",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"room",
+								"apitest",
+								"roomtest90"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Room in Area by id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"API Test Room\",\n    \"description\": \"API room testingmm\"\n}"
+						},
+						"url": {
+							"raw": "localhost:4335/api/room/apitest/roomtest90",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"room",
+								"apitest",
+								"roomtest90"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Room in Area by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/room/apitest/roomtest90",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"room",
+								"apitest",
+								"roomtest90"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ITEM",
+			"item": [
+				{
+					"name": "GET all Items in an Area",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/item/debug",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"item",
+								"debug"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Item in an Area by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/item/apitest/itemtest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"item",
+								"apitest",
+								"itemtest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Item in Area by id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"API Test Room\",\n    \"description\": \"API room testingmfm\",\n    \"roomDesc\": \"a !test! is lying here\"\n}"
+						},
+						"url": {
+							"raw": "localhost:4335/api/item/apitest/itemtest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"item",
+								"apitest",
+								"itemtest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Item in Area by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/item/apitest/itemtest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"item",
+								"apitest",
+								"itemtest"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "NPC",
+			"item": [
+				{
+					"name": "GET all Npcs in an Area",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/npc/apitest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"npc",
+								"apitest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Npc in an Area by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/npc/apitest/npctest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"npc",
+								"apitest",
+								"npctest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Npc in Area by id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"API Test Npc\",\n    \"description\": \"API npc testing!\"\n}"
+						},
+						"url": {
+							"raw": "localhost:4335/api/npc/apitest/npctest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"npc",
+								"apitest",
+								"npctest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Npc in Area by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4335/api/npc/apitest/npctest",
+							"host": [
+								"localhost"
+							],
+							"port": "4335",
+							"path": [
+								"api",
+								"npc",
+								"apitest",
+								"npctest"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Log in to API",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Admin\",\n    \"password\": \"zigmud00\"\n}"
+				},
+				"url": {
+					"raw": "localhost:4335/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "4335",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate cookie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4335/api/validate-cookie",
+					"host": [
+						"localhost"
+					],
+					"port": "4335",
+					"path": [
+						"api",
+						"validate-cookie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log out of API",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4335/api/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "4335",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all bundles",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4335/api/bundles",
+					"host": [
+						"localhost"
+					],
+					"port": "4335",
+					"path": [
+						"api",
+						"bundles"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,33 @@
+.main-layout {
+  max-width: 1200px;
+  padding: 0 1rem;
+  margin: 1rem auto;
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #c5cdd1;
+    padding-bottom: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .area-details-page {
+    h1 {
+      margin: 0 auto;
+    }
+
+    .cui-list-item {
+      min-height: 61px;
+      padding-left: 1.4rem;
+
+      .cui-list-item-content-left {
+        margin-top: -4px;
+      }
+
+      &:last-child {
+        color: #f44336;
+      }
+    }
+  }
+}

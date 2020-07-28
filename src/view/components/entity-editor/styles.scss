@@ -1,0 +1,29 @@
+div.entity-edit-page {
+  h2 {
+    text-align: center;
+  }
+
+  form {
+    max-width: 32rem!important;
+    margin: 0 auto;
+
+    div.form-holder {
+      display: contents;
+    }
+  }
+
+  .cui-form .cui-form-group {
+    margin-bottom: 15px!important;
+
+    &.coordinate {
+      display: inline;
+      max-width: 5rem;
+      margin-right: 1rem;
+      margin-left: 0rem;
+    }
+  }
+
+  .cui-text-area {
+    height: 8rem;
+  }
+}

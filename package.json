@@ -1,0 +1,70 @@
+{
+  "name": "ranvier-zpanel",
+  "version": "1.0.0",
+  "description": "Web-based control panel and building client for Ranvier",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/azigler/ranvier-zpanel.git"
+  },
+  "engines": {
+    "node": ">=12.18.2"
+  },
+  "author": "Andrew Zigler <andrewzigler@gmail.com> (https://www.andrewzigler.com)",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js",
+    "build": "cross-env NODE_ENV=production webpack --progress --config webpack.config.js",
+    "build:analyze": "npm run build -- --env.addon=bundleanalyze --env.addon=bundlevisualizer",
+    "lint:js": "eslint src/ webpack.*.js --cache --fix"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "caniuse-lite": "^1.0.30001103",
+    "clean-webpack-plugin": "^3.0.0",
+    "core-js": "^3.6.5",
+    "cross-env": "^7.0.2",
+    "css-loader": "^3.6.0",
+    "dotenv-webpack": "^1.8.0",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-mithril": "^0.2.0",
+    "file-loader": "^6.0.0",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-flexbugs-fixes": "^4.2.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-normalize": "^9.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "sass-loader": "^8.0.2",
+    "standard": "^14.3.4",
+    "terser-webpack-plugin": "^3.0.7",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^3.8.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2",
+    "webpack-visualizer-plugin": "^0.1.11"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.5",
+    "@hapi/cookie": "^11.0.1",
+    "@hapi/hapi": "^19.2.0",
+    "@hapi/inert": "^6.0.1",
+    "@hapi/joi": "^17.1.1",
+    "construct-ui": "^0.2.6",
+    "mithril": "^2.0.4",
+    "regenerator-runtime": "^0.13.5"
+  },
+  "browserslist": [
+    "IE 10"
+  ]
+}
