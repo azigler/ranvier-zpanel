@@ -186,10 +186,11 @@ export default class EntityEditor {
         })
       }
       if (this.checkTraceryGrammar) {
-        if (!data.roomDesc.match(/!(.*)!/g)) {
+        if (!data.name.match(/!(.*)!/g) ||
+            (!data.roomDesc.match(/!(.*)!/g))) {
           this.isLoading = false
           return this.toaster.show({
-            message: 'Tracery grammar is enabled, so the Room Description field requires the subject to be surrounded by exclamation marks (e.g., !dog!).',
+            message: 'Tracery grammar is enabled, so Name and Room Description fields require the subject to be surrounded by exclamation marks (e.g., !dog!).',
             intent: 'warning',
           })
         }
@@ -222,6 +223,15 @@ export default class EntityEditor {
           message: 'All fields are required.',
           intent: 'warning',
         })
+      }
+      if (this.checkTraceryGrammar) {
+        if (!data.name.match(/!(.*)!/g)) {
+          this.isLoading = false
+          return this.toaster.show({
+            message: 'Tracery grammar is enabled, so the Name field requires the subject to be surrounded by exclamation marks (e.g., !dog!).',
+            intent: 'warning',
+          })
+        }
       }
       m.request({
         method: 'PUT',
