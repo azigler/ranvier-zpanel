@@ -10,6 +10,8 @@ This bundle __WILL NOT WORK__ with a [regular Ranvier checkout](https://github.c
 
 As of now, this bundle has only been tested with [ranvier-datasource-couchdb](https://github.com/azigler/ranvier-datasource-couchdb) serving all entity data.
 
+This bundle requires Ranvier to be using at least [Node v12.18.2 LTS](https://nodejs.org/en/blog/release/v12.18.2/).
+
 ### Instructions
 
 1. Install this bundle in your Ranvier repository.
