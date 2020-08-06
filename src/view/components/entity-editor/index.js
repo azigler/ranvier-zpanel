@@ -1,5 +1,6 @@
 import './styles.scss'
 import BackLink from '../back-link'
+import MetadataEditor from '../metadata-editor'
 const { Form, FormGroup, Input, FormLabel, Button, Toaster, Select, TextArea } = require('construct-ui')
 
 export default class EntityEditor {
@@ -284,6 +285,7 @@ export default class EntityEditor {
   }
 
   renderEditor () {
+    const metadata = (this.stream() || {}).metadata
     switch (this.type) {
     case 'area': {
       return (
@@ -303,6 +305,7 @@ export default class EntityEditor {
             <Select options={window.$zp.bundles()} name="bundle" fluid="true" defaultValue={this.stream().bundle}
               onchange={(e) => { this.stream(Object.assign(this.stream(), { bundle: e.target.value })) }}/>
           </FormGroup>
+          <MetadataEditor metadata={metadata} />
         </div>
       )
     }
@@ -350,6 +353,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
+          <MetadataEditor metadata={metadata} />
         </div>
       )
     }
