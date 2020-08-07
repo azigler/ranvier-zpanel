@@ -35,7 +35,7 @@ export default class MetdataEditor {
       }
 
       metadata[originalKey] = inputValue
-    } 
+    }
 
     if (type === 'key') {
       if (inputValue === originalKey) {
@@ -52,6 +52,26 @@ export default class MetdataEditor {
     )
   }
 
+  // TODO: Test this, add delete functionality.
+  addEntry () {
+    const metadata = this.getMetadata()
+    metadata[''] = ''
+    this.stream(
+      Object.assign(this.stream(), {metadata})
+    )
+    window.document.getElementById('new-meta-key').focus()
+  }
+
+  deleteEntry (key) {
+    if (window.confirm('Delete entry?')) {
+      const metadata = this.getMetadata()
+      delete metadata[key]
+      this.stream(
+        Object.assign(this.stream(), {metadata})
+      )
+    }
+  }
+
   view (vnode) {
     const entries = this.getMetadataEntries()
     console.log({entries});
@@ -59,27 +79,36 @@ export default class MetdataEditor {
       <div class="form-holder">
         <div class="metadata-heading-container">
           <h4>Metadata</h4>
-          <Button 
+          <Button
             label="Add entry"
-            icon-left="plus-circle"
+            iconLeft="plus-circle"
+            onclick={e => addEntry()}
             rounded
           />
         </div>
         {entries.length && (<ul class="metadata-entries-list">
           {entries.map((entry, i) => {
             const [ key, value ] = entry
-            const displayValue = value && typeof value === 'object' 
+            const displayValue = value && typeof value === 'object'
               ? JSON.stringify(value)
               : value
             const keyName = `meta-key-${i}`
             const valueName = `meta-value-${i}`
             return (
               <li>
-                <FormGroup class="metadata-entry-form-group">
+                <FormGroup class="metadata-entry-form-group" id={key === '' ? 'new-meta-key' : `meta-key-${key}`}>
                   <FormLabel for={keyName}>Key</FormLabel>
                   <Input name={keyName} value={key} oninput={(e) => this.updateMetadata(e, key, value, 'key')}></Input>
                   <FormLabel for={valueName}>Value</FormLabel>
                   <Input name={valueName} value={displayValue} oninput={(e) => this.updateMetadata(e, key, value, 'value')}></Input>
+                  <Button
+                    class="delete-metadata-button"
+                    label="Delete"
+                    iconRight="trash-2"
+                    intent="negative"
+                    onclick={() => this.deleteEntry(key)}
+                    size="xs"
+                  />
                 </FormGroup>
               </li>
             )
