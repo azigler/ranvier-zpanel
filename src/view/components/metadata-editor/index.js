@@ -82,7 +82,7 @@ export default class MetdataEditor {
           <Button
             label="Add entry"
             iconLeft="plus-circle"
-            onclick={e => addEntry()}
+            onclick={e => this.addEntry()}
             rounded
           />
         </div>
