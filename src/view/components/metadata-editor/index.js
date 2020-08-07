@@ -59,7 +59,6 @@ export default class MetdataEditor {
     this.stream(
       Object.assign(this.stream(), {metadata})
     )
-    window.document.getElementById('new-meta-key').focus()
   }
 
   deleteEntry (key) {
@@ -96,7 +95,7 @@ export default class MetdataEditor {
             const valueName = `meta-value-${i}`
             return (
               <li>
-                <FormGroup class="metadata-entry-form-group" id={key === '' ? 'new-meta-key' : `meta-key-${key}`}>
+                <FormGroup class="metadata-entry-form-group">
                   <FormLabel for={keyName}>Key</FormLabel>
                   <Input name={keyName} value={key} oninput={(e) => this.updateMetadata(e, key, value, 'key')}></Input>
                   <FormLabel for={valueName}>Value</FormLabel>
