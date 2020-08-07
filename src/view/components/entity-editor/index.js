@@ -285,7 +285,6 @@ export default class EntityEditor {
   }
 
   renderEditor () {
-    const metadata = (this.stream() || {}).metadata
     switch (this.type) {
     case 'area': {
       return (
@@ -305,7 +304,7 @@ export default class EntityEditor {
             <Select options={window.$zp.bundles()} name="bundle" fluid="true" defaultValue={this.stream().bundle}
               onchange={(e) => { this.stream(Object.assign(this.stream(), { bundle: e.target.value })) }}/>
           </FormGroup>
-          <MetadataEditor metadata={metadata} />
+          <MetadataEditor />
         </div>
       )
     }
@@ -353,7 +352,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
-          <MetadataEditor metadata={metadata} />
+          <MetadataEditor />
         </div>
       )
     }

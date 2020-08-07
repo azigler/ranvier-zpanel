@@ -1,0 +1,17 @@
+.add-metadata {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  span {
+    display: flex;
+    flex-flow: row nowrap;
+    p {
+      margin-left: 2px;
+    }
+  }
+}
+
+.metadata-entries-list {
+  list-style: square;
+}
