@@ -16,6 +16,8 @@ export default class MetdataEditor {
   getMetadataEntries() {
     const metadata = this.getMetadata()
     if (!metadata) return []
+
+    // We sort alphabetically by key so that the entries do not shift while editing.
     return [...Object.entries(metadata)].sort((entryA, entryB) => {
       const [keyA] = entryA
       const [keyB] = entryB
@@ -24,13 +26,11 @@ export default class MetdataEditor {
   }
 
   updateMetadata(e, originalKey, originalValue, type) {
-    console.log({e})
     const metadata = this.getMetadata()
     const inputValue = e.target.value
 
     if (type === 'value') {
       if (inputValue === JSON.stringify(originalValue)) {
-        console.warn('Input did not change.')
         return
       }
 
@@ -46,7 +46,6 @@ export default class MetdataEditor {
       metadata[inputValue] = originalValue
     }
 
-    console.log('new ', { metadata })
     this.stream(
       Object.assign(this.stream(), {metadata})
     )
