@@ -72,7 +72,6 @@ export default class MetdataEditor {
 
   view (vnode) {
     const entries = this.getMetadataEntries()
-    console.log({entries});
     return (
       <div class="form-holder">
         <div class="metadata-heading-container">
