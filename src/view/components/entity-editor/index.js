@@ -331,6 +331,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
+          <MetadataEditor />
         </div>
       )
     }
@@ -399,6 +400,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
+          <MetadataEditor />
         </div>
       )
     }
