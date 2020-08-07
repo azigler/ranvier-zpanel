@@ -16,7 +16,11 @@ export default class MetdataEditor {
   getMetadataEntries() {
     const metadata = this.getMetadata()
     if (!metadata) return []
-    return [...Object.entries(metadata)]
+    return [...Object.entries(metadata)].sort((entryA, entryB) => {
+      const [keyA] = entryA
+      const [keyB] = entryB
+      return keyA > keyB ? 1 : -1
+    })
   }
 
   updateMetadata(e, originalKey, originalValue, type) {
