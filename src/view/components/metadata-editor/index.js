@@ -1,5 +1,5 @@
 import './styles.scss'
-const { Form, FormGroup, Input, FormLabel, Icon } = require('construct-ui')
+const { Button, Form, FormGroup, Input, FormLabel, Icon } = require('construct-ui')
 
 import './styles.scss'
 
@@ -57,12 +57,13 @@ export default class MetdataEditor {
     console.log({entries});
     return (
       <div class="form-holder">
-        <div class="add-metadata">
+        <div class="metadata-heading-container">
           <h4>Metadata</h4>
-          <span>
-            <Icon name="plus-circle"/>
-            <p>Add entry</p>
-          </span>
+          <Button 
+            label="Add entry"
+            icon-left="plus-circle"
+            rounded
+          />
         </div>
         {entries.length && (<ul class="metadata-entries-list">
           {entries.map((entry, i) => {

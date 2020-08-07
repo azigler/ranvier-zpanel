@@ -1,11 +1,13 @@
-.add-metadata {
+.metadata-heading-container {
   display: flex;
   justify-content: space-between;
   width: 100%;
 
-  span {
+  .add-metadata-button {
     display: flex;
     flex-flow: row nowrap;
+    cursor: pointer;
+
     p {
       margin-left: 2px;
     }
