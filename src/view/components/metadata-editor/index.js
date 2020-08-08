@@ -92,8 +92,8 @@ export default class MetdataEditor {
             const keyName = `meta-key-${i}`
             const valueName = `meta-value-${i}`
             return (
-              <li>
-                <FormGroup class="metadata-entry-form-group">
+              <li class="metadata-entry-list-item">
+                <FormGroup>
                   <FormLabel for={keyName}>Key</FormLabel>
                   <Input name={keyName} value={key} oninput={(e) => this.updateMetadata(e, key, value, 'key')}></Input>
                   <FormLabel for={valueName}>Value</FormLabel>
