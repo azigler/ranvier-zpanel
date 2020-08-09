@@ -1,4 +1,5 @@
 import './styles.scss'
+import merge from 'mergerino'
 const { TagInput, Tag, Icon, Button, Input } = require('construct-ui')
 
 export default class GrammarEditor {
@@ -37,10 +38,10 @@ export default class GrammarEditor {
         this.entityGrammarFetched = true
         this.protoGrammarProps = data.metadata.grammar
         if (!window.$zp.editor().metadata) {
-          window.$zp.editor(Object.assign(window.$zp.editor(), { metadata: {} }))
+          window.$zp.editor(merge(window.$zp.editor(), { metadata: {} }))
         }
         if (!window.$zp.editor().metadata.grammar) {
-          window.$zp.editor(Object.assign(window.$zp.editor(), {
+          window.$zp.editor(merge(window.$zp.editor(), {
             metadata: {
               ...window.$zp.editor().metadata,
               grammar: {}
@@ -61,9 +62,9 @@ export default class GrammarEditor {
                 })}
               />
               <Icon name="plus" intent="positive" onclick={() => {
-                window.$zp.editor(Object.assign(window.$zp.editor(), {
+                window.$zp.editor(merge(window.$zp.editor(), {
                   metadata: {
-                    grammar: Object.assign({
+                    grammar: merge({
                       ...window.$zp.editor().metadata.grammar,
                       [val]: {
                         '...': true,
@@ -72,6 +73,13 @@ export default class GrammarEditor {
                     })
                   }
                 }))
+                console.log('also tagging meatada')
+                window.$zp.editor(merge(window.$zp.editor(), {
+                  metadata: {
+                    spoopy: true
+                  }
+                }))
+                console.log(window.$zp.editor().metadata)
               }}/>
             </div>
           )
@@ -131,7 +139,7 @@ export default class GrammarEditor {
                     return (<Tag key={i}
                       label={val}
                       onRemove={() => {
-                        window.$zp.grammar(Object.assign(window.$zp.grammar(), {
+                        window.$zp.grammar(merge(window.$zp.grammar(), {
                           [value]: window.$zp.grammar()[value].filter(x => x !== val)
                         }))
                       }}
@@ -140,7 +148,7 @@ export default class GrammarEditor {
                   onAdd={
                     (e) => {
                       window.$zp.grammar()[value].push(e)
-                      window.$zp.grammar(Object.assign(window.$zp.grammar(), {
+                      window.$zp.grammar(merge(window.$zp.grammar(), {
                         [value]: window.$zp.grammar()[value]
                       }))
                     }
@@ -163,7 +171,7 @@ export default class GrammarEditor {
             />
             <Icon name="plus" intent="positive" onclick={() => {
               if (this.newGrammarName.length > 0) {
-                window.$zp.grammar(Object.assign(window.$zp.grammar(), {
+                window.$zp.grammar(merge(window.$zp.grammar(), {
                   [this.newGrammarName]: []
                 })
                 )
@@ -202,10 +210,10 @@ export default class GrammarEditor {
               />
               <Icon name="plus" intent="positive" onclick={() => {
                 if (!window.$zp.editor().metadata) {
-                  window.$zp.editor(Object.assign(window.$zp.editor(), { metadata: {} }))
+                  window.$zp.editor(merge(window.$zp.editor(), { metadata: {} }))
                 }
                 if (!window.$zp.editor().metadata.grammar) {
-                  window.$zp.editor(Object.assign(window.$zp.editor(), {
+                  window.$zp.editor(merge(window.$zp.editor(), {
                     metadata: {
                       ...window.$zp.editor().metadata,
                       grammar: {}
@@ -213,9 +221,9 @@ export default class GrammarEditor {
                   }))
                 }
                 if (this.newGrammarName.length > 0) {
-                  window.$zp.editor(Object.assign(window.$zp.editor(), {
+                  window.$zp.editor(merge(window.$zp.editor(), {
                     metadata: {
-                      grammar: Object.assign({
+                      grammar: merge({
                         ...window.$zp.editor().metadata.grammar,
                         [this.newGrammarName]: []
                       })
@@ -257,9 +265,9 @@ export default class GrammarEditor {
                         label={val}
                         onRemove={() => {
                           if (window.$zp.editor().metadata.grammar[prop].value) {
-                            window.$zp.editor(Object.assign(window.$zp.editor(), {
+                            window.$zp.editor(merge(window.$zp.editor(), {
                               metadata: {
-                                grammar: Object.assign({
+                                grammar: merge({
                                   ...window.$zp.editor().metadata.grammar,
                                   [prop]: {
                                     '...': true,
@@ -269,9 +277,9 @@ export default class GrammarEditor {
                               }
                             }))
                           } else {
-                            window.$zp.editor(Object.assign(window.$zp.editor(), {
+                            window.$zp.editor(merge(window.$zp.editor(), {
                               metadata: {
-                                grammar: Object.assign({
+                                grammar: merge({
                                   ...window.$zp.editor().metadata.grammar,
                                   [prop]: grammarProp.filter(x => x !== val)
                                 })
@@ -286,9 +294,9 @@ export default class GrammarEditor {
                     (e) => {
                       grammarProp.push(e)
                       if (window.$zp.editor().metadata.grammar[prop].value) {
-                        window.$zp.editor(Object.assign(window.$zp.editor(), {
+                        window.$zp.editor(merge(window.$zp.editor(), {
                           metadata: {
-                            grammar: Object.assign({
+                            grammar: merge({
                               ...window.$zp.editor().metadata.grammar,
                               [prop]: {
                                 '...': true,
@@ -298,9 +306,9 @@ export default class GrammarEditor {
                           }
                         }))
                       } else {
-                        window.$zp.editor(Object.assign(window.$zp.editor(), {
+                        window.$zp.editor(merge(window.$zp.editor(), {
                           metadata: {
-                            grammar: Object.assign({
+                            grammar: merge({
                               ...window.$zp.editor().metadata.grammar,
                               [prop]: grammarProp
                             })
@@ -313,7 +321,7 @@ export default class GrammarEditor {
                 <Icon name="x-square" intent="negative" onclick={() => {
                   const old = window.$zp.editor().metadata.grammar
                   delete old[prop]
-                  window.$zp.editor(Object.assign(window.$zp.editor(), {
+                  window.$zp.editor(merge(window.$zp.editor(), {
                     metadata: {
                       grammar: old
                     }
@@ -331,9 +339,9 @@ export default class GrammarEditor {
             />
             <Icon name="plus" intent="positive" onclick={() => {
               if (this.newGrammarName.length > 0) {
-                window.$zp.editor(Object.assign(window.$zp.editor(), {
+                window.$zp.editor(merge(window.$zp.editor(), {
                   metadata: {
-                    grammar: Object.assign({
+                    grammar: merge({
                       ...window.$zp.editor().metadata.grammar,
                       [this.newGrammarName]: []
                     })

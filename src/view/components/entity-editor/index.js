@@ -1,6 +1,7 @@
 import './styles.scss'
 import BackLink from '../back-link'
 import GrammarEditor from '../grammar-editor'
+import merge from 'mergerino'
 const { Form, FormGroup, Input, FormLabel, Button, Toaster, Select, TextArea } = require('construct-ui')
 
 export default class EntityEditor {
@@ -41,7 +42,7 @@ export default class EntityEditor {
           url: `/api/area/${this.id}`,
         }).then(data => {
           this.isLoading = false
-          this.stream(Object.assign(this.stream(), data))
+          this.stream(merge(this.stream(), data))
           console.log('Looking at area data:', this.stream())
         })
       } else {
@@ -68,7 +69,7 @@ export default class EntityEditor {
           method: 'GET',
           url: `/api/item/${this.area}/${this.id}`,
         }).then(data => {
-          this.stream(Object.assign(this.stream(), data))
+          this.stream(merge(this.stream(), data))
           console.log('Looking at item data:', this.stream())
         })
       } else {
@@ -94,7 +95,7 @@ export default class EntityEditor {
           method: 'GET',
           url: `/api/npc/${this.area}/${this.id}`,
         }).then(data => {
-          this.stream(Object.assign(this.stream(), data))
+          this.stream(merge(this.stream(), data))
           console.log('Looking at npc data:', this.stream())
         })
       } else {
@@ -123,7 +124,7 @@ export default class EntityEditor {
           method: 'GET',
           url: `/api/room/${this.area}/${this.id}`,
         }).then(data => {
-          this.stream(Object.assign(this.stream(), data))
+          this.stream(merge(this.stream(), data))
           console.log('Looking at room data:', this.stream())
         })
       } else {

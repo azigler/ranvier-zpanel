@@ -61,6 +61,7 @@
     "@hapi/inert": "^6.0.1",
     "@hapi/joi": "^17.1.1",
     "construct-ui": "^0.2.6",
+    "mergerino": "^0.4.0",
     "mithril": "^2.0.4",
     "regenerator-runtime": "^0.13.5"
   },
