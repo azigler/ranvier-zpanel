@@ -10,6 +10,7 @@ module.exports = (state, Config, Logger) => {
   const roomLoader = loaderRegistry.get('rooms')
   const itemLoader = loaderRegistry.get('items')
   const npcLoader = loaderRegistry.get('npcs')
+  const metaLoader = loaderRegistry.get('metadata')
 
   // load routes
   const routes = [].concat(
@@ -133,6 +134,41 @@ module.exports = (state, Config, Logger) => {
           handler: async function (request, h) {
             if (request.auth.credentials) {
               return Config.get('bundles')
+            } else {
+              return {
+                ok: false
+              }
+            }
+          }
+        },
+
+        // GET shared grammar
+        {
+          method: 'GET',
+          path: '/grammar',
+          handler: async function (request, h) {
+            if (request.auth.credentials) {
+              return await metaLoader.fetch('grammar')
+            } else {
+              return {
+                ok: false
+              }
+            }
+          }
+        },
+
+        // PUT shared grammar
+        {
+          method: 'PUT',
+          path: '/grammar',
+          handler: async function (request, h) {
+            if (request.auth.credentials) {
+              await metaLoader.update('grammar', request.payload)
+              state.RoomManager.grammar = request.payload
+              state.ItemManager.grammar = request.payload
+              state.MobManager.grammar = request.payload
+              Logger.log(`ZPANEL: Shared grammar was updated by ${request.auth.credentials}`)
+              return await metaLoader.fetch('grammar')
             } else {
               return {
                 ok: false

@@ -30,4 +30,36 @@
       }
     }
   }
+  
+  .index-page {
+    .cui-list {
+      h4 {
+        margin-bottom: 0;
+        margin-top: 1.25rem;
+
+        &:first-child {
+          margin-top: 0.25rem;
+        }
+      }
+
+      .cui-list .cui-list-item-content-left {
+        margin-top: -4px;
+      }
+    }
+  }
+
+  .shared-grammar-page {
+    .top {
+      border-bottom: 0;
+      padding-bottom: 0;
+  
+      h1 {
+        max-width: 40rem;
+        padding: 0 10px;
+        border-bottom: 0;
+        margin: 0 auto 1rem;
+        margin-bottom: 0;
+      }
+    }
+  }
 }

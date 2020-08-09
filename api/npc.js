@@ -18,6 +18,12 @@ module.exports = (npcLoader, Config, Logger, MobFactory) => {
       .min(1)
       .trim()
       .required(),
+
+    prototype: joi.string()
+      .min(1)
+      .trim(),
+
+    metadata: joi.object()
   })
 
   const validateAreaId = (request) => {
@@ -109,6 +115,8 @@ module.exports = (npcLoader, Config, Logger, MobFactory) => {
           id: request.params.id,
           name: request.payload.name,
           description: request.payload.description,
+          prototype: request.payload.prototype,
+          metadata: request.payload.metadata
         })
 
         if (!error) {

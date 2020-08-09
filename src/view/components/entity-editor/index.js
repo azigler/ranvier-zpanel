@@ -1,5 +1,6 @@
 import './styles.scss'
 import BackLink from '../back-link'
+import GrammarEditor from '../grammar-editor'
 const { Form, FormGroup, Input, FormLabel, Button, Toaster, Select, TextArea } = require('construct-ui')
 
 export default class EntityEditor {
@@ -15,8 +16,7 @@ export default class EntityEditor {
     this.isLoading = true
     this.isNew = false
 
-    this.bundles = window.$zp.bundles()
-    if (this.bundles.includes('ranvier-tracery')) {
+    if (Array.isArray(window.$zp.bundles()) && window.$zp.bundles().includes('ranvier-tracery')) {
       this.checkTraceryGrammar = true
     }
 
@@ -165,7 +165,6 @@ export default class EntityEditor {
           url: '/api/area',
         }).then(data2 => {
           window.$zp.area(data2)
-          m.route.set('/area')
           this.isLoading = false
         })
       })
@@ -192,6 +191,7 @@ export default class EntityEditor {
           return this.toaster.show({
             message: 'Tracery grammar is enabled, so Name and Room Description fields require the subject to be surrounded by exclamation marks (e.g., !dog!).',
             intent: 'warning',
+            timeout: 6000
           })
         }
       }
@@ -204,9 +204,8 @@ export default class EntityEditor {
           message: 'Save successful.',
           intent: 'positive',
         })
-        window.$zp.item(data)
+        window.$zp.item(data1)
         console.log('new item created :', data1)
-        m.route.set(`/item/${this.area}`)
         this.isLoading = false
       })
       break
@@ -230,6 +229,7 @@ export default class EntityEditor {
           return this.toaster.show({
             message: 'Tracery grammar is enabled, so the Name field requires the subject to be surrounded by exclamation marks (e.g., !dog!).',
             intent: 'warning',
+            timeout: 6000
           })
         }
       }
@@ -244,7 +244,6 @@ export default class EntityEditor {
         })
         console.log('new npc created :', data1)
         window.$zp.npc(data1)
-        m.route.set(`/npc/${this.area}`)
         this.isLoading = false
       })
       break
@@ -275,7 +274,6 @@ export default class EntityEditor {
         })
         console.log('new room created :', data1)
         window.$zp.room(data1)
-        m.route.set(`/room/${this.area}`)
         this.isLoading = false
       })
       break
@@ -315,6 +313,11 @@ export default class EntityEditor {
               oninput={(e) => { this.stream(Object.assign(this.stream(), { id: e.target.value })) }}/>
           </FormGroup>
           <FormGroup>
+            <FormLabel>Prototype</FormLabel>
+            <Input name="prototype" placeholder="area:id" value={this.stream().prototype}
+              oninput={(e) => { this.stream(Object.assign(this.stream(), { prototype: e.target.value })) }}/>
+          </FormGroup>
+          <FormGroup>
             <FormLabel>Name</FormLabel>
             <Input name="name" placeholder="name" value={this.stream().name}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { name: e.target.value })) }}/>
@@ -329,6 +332,10 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
+          <FormGroup>
+            <FormLabel>Grammar</FormLabel>
+            <GrammarEditor type="item" area={this.area} id={this.id} />
+          </FormGroup>
         </div>
       )
     }
@@ -341,6 +348,11 @@ export default class EntityEditor {
               oninput={(e) => { this.stream(Object.assign(this.stream(), { id: e.target.value })) }}/>
           </FormGroup>
           <FormGroup>
+            <FormLabel>Prototype</FormLabel>
+            <Input name="prototype" placeholder="area:id" value={this.stream().prototype}
+              oninput={(e) => { this.stream(Object.assign(this.stream(), { prototype: e.target.value })) }}/>
+          </FormGroup>
+          <FormGroup>
             <FormLabel>Name</FormLabel>
             <Input name="name" placeholder="name" value={this.stream().name}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { name: e.target.value })) }}/>
@@ -349,6 +361,10 @@ export default class EntityEditor {
             <FormLabel>Description</FormLabel>
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Grammar</FormLabel>
+            <GrammarEditor type="npc" area={this.area} id={this.id} />
           </FormGroup>
         </div>
       )
@@ -360,6 +376,11 @@ export default class EntityEditor {
             <FormLabel>ID</FormLabel>
             <Input name="id" placeholder="id" disabled={!this.isNew} value={this.stream().id}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { id: e.target.value })) }}/>
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Prototype</FormLabel>
+            <Input name="prototype" placeholder="area:id" value={this.stream().prototype}
+              oninput={(e) => { this.stream(Object.assign(this.stream(), { prototype: e.target.value })) }}/>
           </FormGroup>
           <FormGroup>
             <FormLabel>Title</FormLabel>
@@ -396,6 +417,10 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
+          <FormGroup>
+            <FormLabel>Grammar</FormLabel>
+            <GrammarEditor type="room" area={this.area} id={this.id} />
+          </FormGroup>
         </div>
       )
     }
@@ -424,6 +449,11 @@ export default class EntityEditor {
         <h2>{this.label} {this.renderPreId()} {this.typeCap}</h2>
         <Form autocomplete="off" onsubmit={(e) => {
           e.preventDefault()
+          if (window.document.activeElement.parentElement.className === 'cui-tag-input-values' ||
+          window.document.activeElement.parentElement.className === 'cui-input cui-positive') {
+            return
+          }
+
           if (this.type === 'area') {
             this.saveEntity(this.stream()._id, this.stream())
           } else {

@@ -22,6 +22,8 @@ module.exports = (roomLoader, Config, Logger, RoomFactory, state) => {
     defaultItems: joi.array(),
 
     defaultNpcs: joi.array(),
+
+    metadata: joi.object()
   })
 
   const validateAreaId = (request) => {
@@ -115,6 +117,7 @@ module.exports = (roomLoader, Config, Logger, RoomFactory, state) => {
           description: request.payload.description,
           defaultItems: request.payload.defaultItems,
           defaultNpcs: request.payload.defaultNpcs,
+          metadata: request.payload.metadata
         })
 
         if (!error) {

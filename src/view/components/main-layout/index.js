@@ -1,27 +1,50 @@
 import './styles.scss'
-const { Button } = require('construct-ui')
+const { Button, ListItem, Icon } = require('construct-ui')
 
 export default class MainLayout {
   constructor () {
     this.isLoading = false
+  }
 
-    // load bundles if missing
-    if (window.$zp.bundles() === undefined) {
-      m.request({
-        method: 'GET',
-        url: '/api/bundles',
-      }).then(data => {
-        window.$zp.bundles(data)
-      })
-    }
-    // load areas if missing
-    if (window.$zp.area() === undefined) {
-      m.request({
-        method: 'GET',
-        url: '/api/area',
-      }).then(data => {
-        window.$zp.area(data)
-      })
+  oninit () {
+    // load bundles
+    m.request({
+      method: 'GET',
+      url: '/api/bundles',
+    }).then(data => {
+      window.$zp.bundles(data)
+
+      // get zPanel extension names
+      this.ext = {
+        tracery: window.$zp.bundles().includes('ranvier-tracery')
+      }
+
+      this.renderExtensions()
+    })
+
+    // load areas
+    m.request({
+      method: 'GET',
+      url: '/api/area',
+    }).then(data => {
+      window.$zp.area(data)
+    })
+  }
+
+  renderExtensions () {
+    for (const ext in this.ext) {
+      switch (ext) {
+      case 'tracery' : {
+        if (this.ext.tracery === false) return
+        window.$zp.extJsx(Object.assign(window.$zp.extJsx(), {
+          tracery: (<ListItem label="Edit Shared Grammar" contentLeft={<Icon name="book-open"/>}
+            onclick={() => {
+              m.route.set('/grammar')
+            }} />)
+        }))
+        break
+      }
+      }
     }
   }
 
@@ -39,6 +62,7 @@ export default class MainLayout {
               if (data.ok === true) {
                 setTimeout(function () {
                   m.route.set('/login')
+                  window.$zp.username(undefined)
                 }, 500)
               }
             })

@@ -51,7 +51,7 @@ export default class EntityList {
                     m.route.set(`/area/${value._id}`)
                   }}
                   contentLeft={<Icon name="hexagon"/>}
-                  contentRight={<Button iconLeft="book" label="Edit Manifest"
+                  contentRight={<Button iconLeft="book" label="Manifest"
                     onclick={() => {
                       m.route.set(`/area/edit/${value._id}`)
                     }} />}
