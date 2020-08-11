@@ -1,5 +1,6 @@
 import './styles.scss'
 import BackLink from '../back-link'
+import MetadataEditor from '../metadata-editor'
 import GrammarEditor from '../grammar-editor'
 import merge from 'mergerino'
 const { Form, FormGroup, Input, FormLabel, Button, Toaster, Select, TextArea } = require('construct-ui')
@@ -302,6 +303,7 @@ export default class EntityEditor {
             <Select options={window.$zp.bundles()} name="bundle" fluid="true" defaultValue={this.stream().bundle}
               onchange={(e) => { this.stream(Object.assign(this.stream(), { bundle: e.target.value })) }}/>
           </FormGroup>
+          <MetadataEditor />
         </div>
       )
     }
@@ -333,6 +335,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
+          <MetadataEditor />
           <FormGroup>
             <FormLabel>Grammar</FormLabel>
             <GrammarEditor type="item" area={this.area} id={this.id} />
@@ -363,6 +366,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
+          <MetadataEditor />
           <FormGroup>
             <FormLabel>Grammar</FormLabel>
             <GrammarEditor type="npc" area={this.area} id={this.id} />
@@ -418,6 +422,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
+          <MetadataEditor />
           <FormGroup>
             <FormLabel>Grammar</FormLabel>
             <GrammarEditor type="room" area={this.area} id={this.id} />
