@@ -1,0 +1,43 @@
+.grammar-editor {
+  margin: 1rem 5rem 0;
+
+  &.wide {
+    margin: initial;
+  }
+
+  .shared-grammar,
+  .entity-grammar,
+  .new-grammar-prop {
+    .cui-tag-input {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      margin-bottom: 0;
+      opacity: 0.9;
+      font-size: 14px;
+      font-style: italic;
+    }
+  
+    .cui-icon.cui-icon-x-square,
+    .cui-icon.cui-icon-plus {
+      position: relative;
+  
+      svg {
+        position: absolute;
+        top: -8px;
+        left: 6px;
+      }
+    }
+  }
+
+  .new-grammar-prop {
+    margin-top: 0.75rem;
+    margin-bottom: 1rem;
+
+    .cui-input {
+      width: 100%;
+    }
+  }
+}

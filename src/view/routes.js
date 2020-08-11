@@ -16,6 +16,7 @@ import NpcPage from './pages/npc'
 import EditNpcPage from './pages/edit-npc'
 import RoomPage from './pages/room'
 import EditRoomPage from './pages/edit-room'
+import EditSharedGrammarPage from './pages/edit-shared-grammar'
 
 // initialize data
 const stream = require('mithril/stream')
@@ -26,8 +27,10 @@ window.$zp = {
   item: stream(),
   npc: stream(),
   deleteWarning: stream(false),
-  bundles: stream(),
-  editor: stream()
+  bundles: stream([]),
+  editor: stream(),
+  extJsx: stream({}),
+  grammar: stream()
 }
 
 // helper functions for splash loader
@@ -53,24 +56,6 @@ function onmatch () {
   // show splash loader until the promise has been resolved or rejected
   showLoader()
   return new Promise((resolve, reject) => {
-    // load bundles if missing
-    if (window.$zp.bundles() === undefined) {
-      m.request({
-        method: 'GET',
-        url: '/api/bundles',
-      }).then(data => {
-        window.$zp.bundles(data)
-      })
-    }
-    // load areas if missing
-    if (window.$zp.area() === undefined) {
-      m.request({
-        method: 'GET',
-        url: '/api/area',
-      }).then(data => {
-        window.$zp.area(data)
-      })
-    }
     // validate the user's cookie
     m.request({
       method: 'POST',
@@ -192,6 +177,12 @@ const Routes = {
     onmatch,
     render (vnode) {
       return render(vnode, m(MainLayout, m(EditRoomPage)))
+    },
+  },
+  '/grammar': {
+    onmatch,
+    render (vnode) {
+      return render(vnode, m(MainLayout, m(EditSharedGrammarPage)))
     },
   },
 }

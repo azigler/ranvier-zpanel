@@ -1,5 +1,7 @@
 import './styles.scss'
-const { Button, Form, FormGroup, Input, FormLabel, Icon } = require('construct-ui')
+import merge from 'mergerino'
+
+const { Button, FormGroup, Input, FormLabel } = require('construct-ui')
 
 import './styles.scss'
 
@@ -46,28 +48,28 @@ export default class MetdataEditor {
       metadata[inputValue] = originalValue
     }
 
-    this.stream(
-      Object.assign(this.stream(), {metadata})
-    )
+    this.updateMetadata(metadata)
   }
 
   // TODO: Test this, add delete functionality.
   addEntry () {
     const metadata = this.getMetadata()
     metadata[''] = ''
-    this.stream(
-      Object.assign(this.stream(), {metadata})
-    )
+    this.updateMetadata(metadata)
   }
 
   deleteEntry (key) {
     if (window.confirm('Delete entry?')) {
       const metadata = this.getMetadata()
       delete metadata[key]
-      this.stream(
-        Object.assign(this.stream(), {metadata})
-      )
+      this.updateMetadata(metadata)
     }
+  }
+
+  updateMetadata (metadata) {
+    this.stream(
+      merge(this.stream(), {metadata})
+    )
   }
 
   view (vnode) {

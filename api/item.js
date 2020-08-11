@@ -23,6 +23,12 @@ module.exports = (itemLoader, Config, Logger, ItemFactory) => {
       .min(1)
       .trim()
       .required(),
+
+    prototype: joi.string()
+      .min(1)
+      .trim(),
+
+    metadata: joi.object()
   })
 
   const validateAreaId = (request) => {
@@ -114,7 +120,9 @@ module.exports = (itemLoader, Config, Logger, ItemFactory) => {
           id: request.params.id,
           name: request.payload.name,
           description: request.payload.description,
-          roomDesc: request.payload.roomDesc
+          roomDesc: request.payload.roomDesc,
+          prototype: request.payload.prototype,
+          metadata: request.payload.metadata
         })
 
         if (!error) {
