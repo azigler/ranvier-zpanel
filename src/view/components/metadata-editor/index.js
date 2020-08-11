@@ -48,25 +48,25 @@ export default class MetdataEditor {
       metadata[inputValue] = originalValue
     }
 
-    this.updateMetadata(metadata)
+    this.mergeMetadata(metadata)
   }
 
   // TODO: Test this, add delete functionality.
   addEntry () {
     const metadata = this.getMetadata()
     metadata[''] = ''
-    this.updateMetadata(metadata)
+    this.mergeMetadata(metadata)
   }
 
   deleteEntry (key) {
     if (window.confirm('Delete entry?')) {
       const metadata = this.getMetadata()
       delete metadata[key]
-      this.updateMetadata(metadata)
+      this.mergeMetadata(metadata)
     }
   }
 
-  updateMetadata (metadata) {
+  mergeMetadata (metadata) {
     this.stream(
       merge(this.stream(), {metadata})
     )
@@ -97,9 +97,9 @@ export default class MetdataEditor {
               <li class="metadata-entry-list-item">
                 <FormGroup>
                   <FormLabel for={keyName}>Key</FormLabel>
-                  <Input name={keyName} value={key} oninput={(e) => this.updateMetadata(e, key, value, 'key')}></Input>
+                  <Input name={keyName} value={key} onchange={(e) => this.updateMetadata(e, key, value, 'key')}></Input>
                   <FormLabel for={valueName}>Value</FormLabel>
-                  <Input name={valueName} value={displayValue} oninput={(e) => this.updateMetadata(e, key, value, 'value')}></Input>
+                  <Input name={valueName} value={displayValue} onchange={(e) => this.updateMetadata(e, key, value, 'value')}></Input>
                   <Button
                     class="delete-metadata-button"
                     label="Delete"
