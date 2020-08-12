@@ -1,3 +1,8 @@
+.grammar-editor-title {
+  margin-bottom: 0;
+  margin-top: 2rem;
+}
+
 .grammar-editor {
   margin: 1rem 5rem 0;
 
@@ -33,11 +38,14 @@
   }
 
   .new-grammar-prop {
-    margin-top: 0.75rem;
     margin-bottom: 1rem;
 
     .cui-input {
       width: 100%;
     }
+  }
+  
+  .extended-grammar-true {
+    display: none;
   }
 }

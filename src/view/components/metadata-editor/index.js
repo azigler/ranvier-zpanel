@@ -1,21 +1,22 @@
 import './styles.scss'
 import merge from 'mergerino'
+import GrammarEditor from '../grammar-editor'
+const { Button, FormGroup, Input, FormLabel, Card } = require('construct-ui')
 
-const { Button, FormGroup, Input, FormLabel } = require('construct-ui')
-
-import './styles.scss'
-
-export default class MetdataEditor {
-  constructor() {
+export default class MetadataEditor {
+  constructor (vnode) {
+    this.id = m.route.param('id') || ''
+    this.area = m.route.param('area')
     this.stream = window.$zp.editor
+    this.isArea = (vnode.attrs.type === 'area')
   }
 
-  getMetadata() {
+  getMetadata () {
     const data = this.stream()
-    return (data || {}).metadata
+    return (data || { metadata: {} }).metadata
   }
 
-  getMetadataEntries() {
+  getMetadataEntries () {
     const metadata = this.getMetadata()
     if (!metadata) return []
 
@@ -27,7 +28,7 @@ export default class MetdataEditor {
     })
   }
 
-  updateMetadata(e, originalKey, originalValue, type) {
+  updateMetadata (e, originalKey, originalValue, type) {
     const metadata = this.getMetadata()
     const inputValue = e.target.value
 
@@ -51,7 +52,6 @@ export default class MetdataEditor {
     this.mergeMetadata(metadata)
   }
 
-  // TODO: Test this, add delete functionality.
   addEntry () {
     const metadata = this.getMetadata()
     metadata[''] = ''
@@ -63,38 +63,40 @@ export default class MetdataEditor {
       const metadata = this.getMetadata()
       delete metadata[key]
       this.mergeMetadata(metadata)
+      if (Object.keys(metadata).filter(prop => prop[0] !== 'grammar').length === 0) {
+        this.addEntry()
+      }
     }
   }
 
   mergeMetadata (metadata) {
     this.stream(
-      merge(this.stream(), {metadata})
+      merge(this.stream(), { metadata })
     )
   }
 
   view (vnode) {
     const entries = this.getMetadataEntries()
     return (
-      <div class="form-holder">
-        <div class="metadata-heading-container">
-          <h4>Metadata</h4>
+      <div class="metadata-editor">
+        <div class="header">
+          <h3>Metadata</h3>
           <Button
-            label="Add entry"
-            iconLeft="plus-circle"
+            iconLeft="plus"
+            intent="positive"
             onclick={e => this.addEntry()}
-            rounded
           />
         </div>
         {entries.length && (<ul class="metadata-entries-list">
-          {entries.map((entry, i) => {
-            const [ key, value ] = entry
+          {entries.filter(entry => entry[0] !== 'grammar').map((entry, i) => {
+            const [key, value] = entry
             const displayValue = value && typeof value === 'object'
               ? JSON.stringify(value)
               : value
             const keyName = `meta-key-${i}`
             const valueName = `meta-value-${i}`
             return (
-              <li class="metadata-entry-list-item">
+              <Card key={i}>
                 <FormGroup>
                   <FormLabel for={keyName}>Key</FormLabel>
                   <Input name={keyName} value={key} onchange={(e) => this.updateMetadata(e, key, value, 'key')}></Input>
@@ -102,17 +104,20 @@ export default class MetdataEditor {
                   <Input name={valueName} value={displayValue} onchange={(e) => this.updateMetadata(e, key, value, 'value')}></Input>
                   <Button
                     class="delete-metadata-button"
-                    label="Delete"
-                    iconRight="trash-2"
+                    iconLeft="trash-2"
                     intent="negative"
                     onclick={() => this.deleteEntry(key)}
                     size="xs"
                   />
                 </FormGroup>
-              </li>
+              </Card>
             )
           })}
         </ul>)}
+        <FormGroup class={`area-${this.isArea}`}>
+          <h3 class="grammar-editor-title">Grammar</h3>
+          <GrammarEditor type="npc" area={this.area} id={this.id} />
+        </FormGroup>
       </div>
     )
   }

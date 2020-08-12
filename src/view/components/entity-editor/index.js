@@ -1,7 +1,6 @@
 import './styles.scss'
 import BackLink from '../back-link'
 import MetadataEditor from '../metadata-editor'
-import GrammarEditor from '../grammar-editor'
 import merge from 'mergerino'
 const { Form, FormGroup, Input, FormLabel, Button, Toaster, Select, TextArea } = require('construct-ui')
 
@@ -32,7 +31,10 @@ export default class EntityEditor {
       window.$zp.editor({
         _id: this.id,
         title: '',
-        bundle: 'ranvier-zpanel'
+        bundle: 'ranvier-zpanel',
+        metadata: {
+          "": ""
+        }
       })
       this.stream = window.$zp.editor
       this.isLoading = false
@@ -59,7 +61,10 @@ export default class EntityEditor {
         id: this.id,
         name: '',
         description: '',
-        roomDesc: ''
+        roomDesc: '',
+        metadata: {
+          "": ""
+        }
       })
       this.stream = window.$zp.editor
       this.isLoading = false
@@ -86,6 +91,9 @@ export default class EntityEditor {
         id: this.id,
         name: '',
         description: '',
+        metadata: {
+          "": ""
+        }
       })
       this.stream = window.$zp.editor
       this.isLoading = false
@@ -114,7 +122,10 @@ export default class EntityEditor {
         description: '',
         coordinates: [null, null, null],
         items: [],
-        npcs: []
+        npcs: [],
+        metadata: {
+          "": ""
+        }
       })
       this.stream = window.$zp.editor
       this.isLoading = false
@@ -138,6 +149,10 @@ export default class EntityEditor {
   }
 
   saveEntity (id, data) {
+    if (data.metadata[''] !== undefined) {
+      delete data.metadata['']
+    }
+
     switch (this.type) {
     // SAVE AREA ENTITY
     case 'area': {
@@ -161,7 +176,7 @@ export default class EntityEditor {
           message: 'Save successful.',
           intent: 'positive'
         })
-        console.log('new area created :', data1)
+        console.log('area edited:', data1)
         m.request({
           method: 'GET',
           url: '/api/area',
@@ -170,6 +185,9 @@ export default class EntityEditor {
           this.isLoading = false
         })
       })
+      if (Object.keys(window.$zp.editor().metadata).length === 0) {
+        window.$zp.editor(merge(window.$zp.editor(), {metadata: {"": ""}}))
+      }
       break
     }
     // SAVE ITEM ENTITY
@@ -207,9 +225,12 @@ export default class EntityEditor {
           intent: 'positive',
         })
         window.$zp.item(data1)
-        console.log('new item created :', data1)
+        console.log('item edited :', data1)
         this.isLoading = false
       })
+      if (Object.keys(window.$zp.editor().metadata).length === 0) {
+        window.$zp.editor(merge(window.$zp.editor(), {metadata: {"": ""}}))
+      }
       break
     }
     // SAVE NPC ENTITY
@@ -244,10 +265,13 @@ export default class EntityEditor {
           message: 'Save successful.',
           intent: 'positive',
         })
-        console.log('new npc created :', data1)
+        console.log('npc edited:', data1)
         window.$zp.npc(data1)
         this.isLoading = false
       })
+      if (Object.keys(window.$zp.editor().metadata).length === 0) {
+        window.$zp.editor(merge(window.$zp.editor(), {metadata: {"": ""}}))
+      }
       break
     }
     // SAVE ROOM ENTITY
@@ -274,10 +298,13 @@ export default class EntityEditor {
           message: 'Save successful.',
           intent: 'positive',
         })
-        console.log('new room created :', data1)
+        console.log('room edited:', data1)
         window.$zp.room(data1)
         this.isLoading = false
       })
+      if (Object.keys(window.$zp.editor().metadata).length === 0) {
+        window.$zp.editor(merge(window.$zp.editor(), {metadata: {"": ""}}))
+      }
       break
     }
     }
@@ -303,7 +330,7 @@ export default class EntityEditor {
             <Select options={window.$zp.bundles()} name="bundle" fluid="true" defaultValue={this.stream().bundle}
               onchange={(e) => { this.stream(Object.assign(this.stream(), { bundle: e.target.value })) }}/>
           </FormGroup>
-          <MetadataEditor />
+          <MetadataEditor type="area" />
         </div>
       )
     }
@@ -335,11 +362,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
-          <MetadataEditor />
-          <FormGroup>
-            <FormLabel>Grammar</FormLabel>
-            <GrammarEditor type="item" area={this.area} id={this.id} />
-          </FormGroup>
+          <MetadataEditor type="item" />
         </div>
       )
     }
@@ -366,11 +389,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
-          <MetadataEditor />
-          <FormGroup>
-            <FormLabel>Grammar</FormLabel>
-            <GrammarEditor type="npc" area={this.area} id={this.id} />
-          </FormGroup>
+          <MetadataEditor type="npc" />
         </div>
       )
     }
@@ -422,11 +441,7 @@ export default class EntityEditor {
             <TextArea name="description" placeholder="description" value={this.stream().description}
               oninput={(e) => { this.stream(Object.assign(this.stream(), { description: e.target.value })) }}/>
           </FormGroup>
-          <MetadataEditor />
-          <FormGroup>
-            <FormLabel>Grammar</FormLabel>
-            <GrammarEditor type="room" area={this.area} id={this.id} />
-          </FormGroup>
+          <MetadataEditor type="room" />
         </div>
       )
     }
@@ -455,8 +470,11 @@ export default class EntityEditor {
         <h2>{this.label} {this.renderPreId()} {this.typeCap}</h2>
         <Form autocomplete="off" onsubmit={(e) => {
           e.preventDefault()
-          if (window.document.activeElement.parentElement.className === 'cui-tag-input-values' ||
-          window.document.activeElement.parentElement.className === 'cui-input cui-positive') {
+          if (
+            window.document.activeElement.parentElement.className === 'cui-tag-input-values' ||
+            window.document.activeElement.parentElement.className === 'cui-input cui-positive' ||
+            window.document.activeElement.parentElement.className === 'cui-input'
+          ) {
             return
           }
 

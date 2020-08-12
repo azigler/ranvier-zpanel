@@ -21,6 +21,8 @@ module.exports = (areaLoader, Config, Logger, AreaFactory) => {
       .trim()
       .regex(/\s/, { invert: true })
       .required(),
+
+    metadata: joi.object()
   })
 
   const validateAreaId = (request) => {
@@ -85,7 +87,8 @@ module.exports = (areaLoader, Config, Logger, AreaFactory) => {
         const { error, value } = areaSchema.validate({
           _id: request.params.id,
           title: request.payload.title,
-          bundle: request.payload.bundle
+          bundle: request.payload.bundle,
+          metadata: request.payload.metadata
         })
 
         if (!error) {

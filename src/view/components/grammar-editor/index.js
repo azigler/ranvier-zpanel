@@ -3,10 +3,11 @@ import merge from 'mergerino'
 const { TagInput, Tag, Icon, Button, Input } = require('construct-ui')
 
 export default class GrammarEditor {
-  constructor () {
+  constructor (vnode) {
     this.isLoading = false
     this.entityGrammarFetched = false
     this.newGrammarName = ''
+    this.isShared = (vnode.attrs.type === 'shared')
   }
 
   oninit () {
@@ -26,7 +27,7 @@ export default class GrammarEditor {
     // and the editor stream is populated, fetch the entity's
     // prototype's grammar, if applicable
     if (this.entityGrammarFetched === false &&
-        vnode.attrs.type !== 'shared' &&
+        !this.isShared &&
         window.$zp.editor().prototype) {
       m.request({
         method: 'GET',
@@ -37,6 +38,8 @@ export default class GrammarEditor {
         }
         this.entityGrammarFetched = true
         this.protoGrammarProps = data.metadata.grammar
+        this.renderedProtoGrammarTagInputs = this.renderProtoGrammarTagInputs(this.protoGrammarProps)
+
         if (!window.$zp.editor().metadata) {
           window.$zp.editor(merge(window.$zp.editor(), { metadata: {} }))
         }
@@ -48,49 +51,45 @@ export default class GrammarEditor {
             }
           }))
         }
-
-        this.xx = (Object.keys(this.protoGrammarProps).map((val, i) => {
-          return (
-            <div class="entity-grammar" key={i} id={`entity-grammar-${val}`}>
-              <label>{val}</label>
-              <TagInput
-                disabled
-                tags={this.protoGrammarProps[val].map((val2, i2) => {
-                  return ((<Tag key={i2}
-                    label={val2}
-                  />))
-                })}
-              />
-              <Icon name="plus" intent="positive" onclick={() => {
-                window.$zp.editor(merge(window.$zp.editor(), {
-                  metadata: {
-                    grammar: merge({
-                      ...window.$zp.editor().metadata.grammar,
-                      [val]: {
-                        '...': true,
-                        value: []
-                      }
-                    })
-                  }
-                }))
-                console.log('also tagging meatada')
-                window.$zp.editor(merge(window.$zp.editor(), {
-                  metadata: {
-                    spoopy: true
-                  }
-                }))
-                console.log(window.$zp.editor().metadata)
-              }}/>
-            </div>
-          )
-        }))
       })
     }
   }
 
+  renderProtoGrammarTagInputs (protoGrammarProps) {
+    if (!protoGrammarProps) return
+    return Object.keys(protoGrammarProps).map((val, i) => {
+      return (
+        <div class="entity-grammar" key={i} id={`entity-grammar-${val}`}>
+          <label>{val}</label>
+          <TagInput
+            disabled
+            tags={protoGrammarProps[val].map((val2, i2) => {
+              return ((<Tag key={i2}
+                label={val2}
+              />))
+            })}
+          />
+          <Icon name="plus" intent="positive" class={`extended-grammar-${window.$zp.editor().metadata.grammar[val] ? true : false}`} onclick={() => {
+            window.$zp.editor(merge(window.$zp.editor(), {
+              metadata: {
+                grammar: merge({
+                  ...window.$zp.editor().metadata.grammar,
+                  [val]: {
+                    '...': true,
+                    value: []
+                  }
+                })
+              }
+            }))
+            this.renderedProtoGrammarTagInputs = this.renderProtoGrammarTagInputs(this.protoGrammarProps)
+          }}/>
+        </div>
+      )
+    })
+  }
+
   renderProtoGrammarForProp (prop) {
     if (!window.$zp.editor().metadata.grammar[prop]) {
-      console.log('saving throw')
       return {
         isNested: undefined,
         protoGrammarVals: undefined,
@@ -116,9 +115,27 @@ export default class GrammarEditor {
     return { isNested, protoGrammarVals, grammarValues, grammarProp }
   }
 
-  // TODO: function for adding a grammar prop
-
-  // TODO: function for deleting a grammar prop
+  addNewGrammar () {
+    if (this.newGrammarName.length > 0) {
+      if (!this.isShared) {
+        window.$zp.editor(merge(window.$zp.editor(), {
+          metadata: {
+            grammar: merge({
+              ...window.$zp.editor().metadata.grammar,
+              [this.newGrammarName]: []
+            })
+          }
+        }))
+      } else {
+        window.$zp.grammar(merge(window.$zp.grammar(), {
+          [this.newGrammarName]: []
+        }))
+      }
+      
+      this.newGrammarName = ''
+      m.redraw()
+    }
+  }
 
   view (vnode) {
     if (vnode.attrs.type === 'shared') {
@@ -163,10 +180,11 @@ export default class GrammarEditor {
             )
           })}
           <div class="new-grammar-prop">
-            <label>New Shared Grammar Property</label>
-            <Input intent="positive" onchange={(e) => {
+            <label>Add a new shared grammar property</label>
+            <Input placeholder="Shared grammar property name" intent="positive" onchange={(e) => {
               this.newGrammarName = e.target.value
             }}
+            onenter={this.addNewGrammar()}
             value={this.newGrammarName}
             />
             <Icon name="plus" intent="positive" onclick={() => {
@@ -200,12 +218,14 @@ export default class GrammarEditor {
           !window.$zp.editor().metadata.grammar) {
         return (
           <div class="grammar-editor wide">
-            { this.xx }
+            { this.renderedProtoGrammarTagInputs }
             <div class="new-grammar-prop">
-              <label>New Grammar Property</label>
-              <Input intent="positive" onchange={(e) => {
+            <label>Add a new grammar property</label>
+            <Input placeholder="Grammar property name" intent="positive"
+              onchange={(e) => {
                 this.newGrammarName = e.target.value
               }}
+              onenter={this.addNewGrammar()}
               value={this.newGrammarName}
               />
               <Icon name="plus" intent="positive" onclick={() => {
@@ -237,23 +257,13 @@ export default class GrammarEditor {
         )
       }
 
-      // otherwise, show the entity's prototype grammar
-      // and their editable grammar
-
-      // TODO: list all prototype grammars with a button to expand on them or replace them
-
       // otherwise, show the entity's editable grammar
       return (
         <div class="grammar-editor wide">
-          { this.xx }
+          { this.renderedProtoGrammarTagInputs }
           {Object.keys(window.$zp.editor().metadata.grammar).map((prop, index) => {
             const { isNested, grammarValues, grammarProp } = this.renderProtoGrammarForProp(prop)
-
-            // render a tag input for the each of the entity's grammar props
-            // with tags representing each value within the grammar prop
-            // include the prototype's grammar prop values, if applicable
-
-            // TODO: instead of listing expanded proto grammar down here, generate the HTML then append to an ID-marked disabled input above!
+  
             return (
               <div class="entity-grammar" key={index}>
                 <label>{prop}</label>
@@ -326,30 +336,19 @@ export default class GrammarEditor {
                       grammar: old
                     }
                   }))
+                  this.renderedProtoGrammarTagInputs = this.renderProtoGrammarTagInputs(this.protoGrammarProps)
                 }}/>
               </div>
             )
           })}
           <div class="new-grammar-prop">
-            <label>New Grammar Property</label>
-            <Input intent="positive" onchange={(e) => {
+            <label>Add a new grammar property</label>
+            <Input placeholder="Grammar property name" intent="positive" onenter={this.addNewGrammar()} onchange={(e) => {
               this.newGrammarName = e.target.value
             }}
             value={this.newGrammarName}
             />
-            <Icon name="plus" intent="positive" onclick={() => {
-              if (this.newGrammarName.length > 0) {
-                window.$zp.editor(merge(window.$zp.editor(), {
-                  metadata: {
-                    grammar: merge({
-                      ...window.$zp.editor().metadata.grammar,
-                      [this.newGrammarName]: []
-                    })
-                  }
-                }))
-                this.newGrammarName = ''
-              }
-            }}/>
+            <Icon name="plus" intent="positive" onclick={this.addNewGrammar()}/>
           </div>
         </div>
       )

@@ -5,14 +5,21 @@ const { List, Icon, PopoverMenu, ListItem, MenuItem, Button, Overlay, Spinner } 
 
 export default class EntityList {
   constructor (vnode) {
-    this.activeId = null
     this.isLoading = true
+
     this.type = vnode.attrs.type
-    this.area = m.route.param('area')
     this.typeCap = this.type.charAt(0).toUpperCase() + this.type.slice(1)
+    this.area = m.route.param('area')
+
     this.stream = window.$zp[this.type]
+    // reset the entity list stream for this type
     this.stream(undefined)
 
+    // initialize ID for delete warning
+    this.idToDelete = null
+  }
+
+  oninit (vnode) {
     if (this.type !== 'area') {
       m.request({
         method: 'GET',
@@ -97,7 +104,7 @@ export default class EntityList {
                       intent="negative"
                       label="Delete"
                       onclick={() => {
-                        this.activeId = value.id
+                        this.idToDelete = value.id
                         window.$zp.deleteWarning(true)
                       }}
                     />
@@ -139,12 +146,12 @@ export default class EntityList {
         </div>
         {this.renderList(vnode)}
         <Overlay closeOnEscapeKey="true" closeOnOutsideClick="true" hasBackdrop="true"
-          content={<DeleteWarning id={this.activeId} type={this.type} area={this.area} />}
+          content={<DeleteWarning id={this.idToDelete} type={this.type} area={this.area} />}
           isOpen={window.$zp.deleteWarning()}
           onClose={() => {
             window.$zp.deleteWarning(false)
             setTimeout(function () {
-              this.activeId = null
+              this.idToDelete = null
             }, 1000)
           }}
         />
