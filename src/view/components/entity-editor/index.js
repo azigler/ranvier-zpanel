@@ -17,11 +17,15 @@ export default class EntityEditor {
     this.isLoading = true
     this.isNew = false
 
-    if (Array.isArray(window.$zp.bundles()) && window.$zp.bundles().includes('ranvier-tracery')) {
+    if (this.hasBundle('ranvier-tracery')) {
       this.checkTraceryGrammar = true
     }
 
     this.initializeEditor()
+  }
+
+  hasBundle(bundleName) {
+    return Array.isArray(window.$zp.bundles()) && window.$zp.bundles().includes(bundleName)
   }
 
   initializeEditor () {
@@ -33,7 +37,7 @@ export default class EntityEditor {
         title: '',
         bundle: 'ranvier-zpanel',
         metadata: {
-          "": ""
+          '': ''
         }
       })
       this.stream = window.$zp.editor
@@ -148,6 +152,31 @@ export default class EntityEditor {
     }
   }
 
+  isMissingFields(data) {
+    switch (this.type) {
+      case 'area':
+        return data._id.length === 0 ||
+          data.title.length === 0 ||
+          data.bundle.length === 0
+      case 'item':
+        return data.id.length === 0 ||
+          data.name.length === 0 ||
+          data.description.length === 0 ||
+          data.roomDesc.length === 0
+      case 'npc':
+        return data.id.length === 0 ||
+          data.name.length === 0 ||
+          data.description.length === 0
+      case 'room':
+        return data.id.length === 0 ||
+          data.title.length === 0 ||
+          data.description.length === 0
+      default: 
+        console.log('Type validation not found.')
+        return false
+    }
+  }
+
   saveEntity (id, data) {
     if (data.metadata[''] !== undefined) {
       delete data.metadata['']
@@ -158,9 +187,7 @@ export default class EntityEditor {
     case 'area': {
       console.log('saving area', id, 'with data:', data)
       this.isLoading = true
-      if (data._id.length === 0 ||
-        data.title.length === 0 ||
-        data.bundle.length === 0) {
+      if (this.isMissingFields(data)) {
         this.isLoading = false
         return this.toaster.show({
           message: 'All fields are required.',
@@ -194,10 +221,7 @@ export default class EntityEditor {
     case 'item': {
       console.log('saving item', id, 'with data:', data)
       this.isLoading = true
-      if (data.id.length === 0 ||
-        data.name.length === 0 ||
-        data.description.length === 0 ||
-        data.roomDesc.length === 0) {
+      if (this.isMissingFields(data)) {
         this.isLoading = false
         return this.toaster.show({
           message: 'All fields are required.',
@@ -237,9 +261,7 @@ export default class EntityEditor {
     case 'npc': {
       console.log('saving npc', id, 'with data:', data)
       this.isLoading = true
-      if (data.id.length === 0 ||
-        data.name.length === 0 ||
-        data.description.length === 0) {
+      if (this.isMissingFields(data)) {
         this.isLoading = false
         return this.toaster.show({
           message: 'All fields are required.',
@@ -278,9 +300,7 @@ export default class EntityEditor {
     case 'room': {
       console.log('saving room', id, 'with data:', data)
       this.isLoading = true
-      if (data.id.length === 0 ||
-        data.title.length === 0 ||
-        data.description.length === 0) {
+      if (this.isMissingFields(data)) {
         this.isLoading = false
         return this.toaster.show({
           message: 'All fields are required.',
