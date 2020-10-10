@@ -13,12 +13,12 @@ module.exports = (state, Config, Logger) => {
   const metaLoader = loaderRegistry.get('metadata')
 
   // load routes
-  const routes = [].concat(
+  const routes = [
     area(areaLoader, Config, Logger, state.AreaFactory),
     room(roomLoader, Config, Logger, state.RoomFactory, state),
     item(itemLoader, Config, Logger, state.ItemFactory),
     npc(npcLoader, Config, Logger, state.MobFactory)
-  )
+  ]
 
   // export hapi plugin
   return {

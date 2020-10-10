@@ -6,9 +6,7 @@ const hapi = require('@hapi/hapi')
 
 const { Logger, Config } = require('ranvier')
 
-let { url, port } = Config.get('zPanel')
-if (!url) url = 'localhost'
-if (!port) port = 4335
+const { url = 'localhost', port = 4335 } = Config.get('zPanel')
 
 const cookieUsername = process.env.ZPANEL_COOKIE_UN || 'zpanel'
 const cookiePassword = process.env.ZPANEL_COOKIE_PW || 'ranvier-zpanel-hapi-authentication-cookie'
