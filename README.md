@@ -1,4 +1,6 @@
-# ranvier-zpanel
+![](https://images.prismic.io/andrewzigler/dec91971-43b6-4aed-856d-ff4b5a655969_ranvier-zpanel.jpg?ixlib=gatsbyFP&auto=compress%2Cformat&fit=max&q=50&rect=0%2C0%2C1200%2C628&w=1200&h=628)
+
+# ranvier-zpanel *\*\*(deprecated)\*\**
 
 > Web-based control panel and building client for Ranvier
 
